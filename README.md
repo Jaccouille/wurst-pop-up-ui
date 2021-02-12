@@ -6,6 +6,6 @@ Create a pop up frame upon triggered event
 You need to add the .toc and .fdf files from the imports folder into your own project's imports folder.
 
 Demo: https://github.com/Jaccouille/wurst-pop-up-ui/blob/main/wurst/PopUpTest.wurst
-![](https://gfycat.com/blissfulloathsomeharvestmen.gif)
+![](https://thumbs.gfycat.com/BlissfulLoathsomeHarvestmen-size_restricted.gif)
 
 Still a bit clunky, haven't tested on multiplayer yet.
