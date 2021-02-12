@@ -1,8 +1,6 @@
 package PopUp
 
-import Assets
 import ClosureTimers
-import ClosureEvents
 import HashMap
 import LinkedList
 
@@ -11,6 +9,7 @@ let popUpPerPlayer = new HashMap<player, LinkedList<PopUpFrame>>
 // Position of the initial pop up
 @configurable let BOTTOM_RIGHT_OFFSET_X = 1.11
 @configurable let BOTTOM_RIGHT_OFFSET_Y = 0.155
+
 @configurable let TRANSITION_SPEED = 0.3
 @configurable let POP_UP_ANIMATION_PERIOD = 0.03
 
@@ -76,7 +75,7 @@ class PopUpFrame
         popUpPerPlayer.get(_p).remove(this)
         popUpFrame.remove()
 
-function createPopUp(string iconLeft, string iconMiddle, string iconRight)
+public function createPopUp(string iconLeft, string iconMiddle, string iconRight)
     // Display frame to every player
     // TODO: Think of a way to handle frame display to specific players like,
     // every player, Allies or Observer
@@ -118,15 +117,3 @@ init
     for i = 0 to bj_MAX_PLAYERS - 1
         if players[i].isIngame()
             popUpPerPlayer.put(players[i], new LinkedList<PopUpFrame>)
-
-    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-        print("No native to get the unit icon.")
-        createPopUp(Icons.bTNTemp, Icons.bTNAttack, Icons.bTNTemp)
-
-    EventListener.add(EVENT_PLAYER_UNIT_PICKUP_ITEM) ->
-        let itmIcon = EventData.getManipulatedItem().getIconPath()
-        createPopUp(Icons.bTNTemp, Icons.bTNPickUpItem, itmIcon)
-
-    EventListener.add(EVENT_PLAYER_UNIT_SELL_ITEM) ->
-        let itmIcon = EventData.getSoldItem().getIconPath()
-        createPopUp(Icons.bTNTemp, Icons.bTNMGExchange, itmIcon)

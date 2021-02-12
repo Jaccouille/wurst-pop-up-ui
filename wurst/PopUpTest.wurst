@@ -1,0 +1,18 @@
+package PopUpTest
+
+import Assets
+import ClosureEvents
+import PopUp
+
+init
+    EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
+        print("No native to get the unit icon.")
+        createPopUp(Icons.bTNHeroMountainKing, Icons.bTNAttack, Icons.bTNPeasant)
+
+    EventListener.add(EVENT_PLAYER_UNIT_PICKUP_ITEM) ->
+        let itmIcon = EventData.getManipulatedItem().getIconPath()
+        createPopUp(Icons.bTNHeroMountainKing, Icons.bTNPickUpItem, itmIcon)
+
+    EventListener.add(EVENT_PLAYER_UNIT_PAWN_ITEM) ->
+        let itmIcon = EventData.getSoldItem().getIconPath()
+        createPopUp(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, itmIcon)

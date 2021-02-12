@@ -3,7 +3,6 @@ IncludeFile "UI\FrameDef\UI\EscMenuTemplates.fdf",
 Texture "PopUpIconTemplate" {
     Width 0.04,
     Height 0.04,
-    TexCoord 0.125, 0.875, 0.125, 0.875, // Remove Icon border
 }
 
 Frame "SIMPLEFRAME" "PopUpPanel" {
@@ -30,6 +29,7 @@ Frame "SIMPLEFRAME" "PopUpPanel" {
         }
         Texture "IconMiddle" INHERITS "PopUpIconTemplate" {
             Anchor CENTER, 0, 0.001,
+            TexCoord 0.125, 0.875, 0.125, 0.875, // Remove Icon border
         }
     }
 }

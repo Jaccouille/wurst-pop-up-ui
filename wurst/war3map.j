@@ -41,11 +41,18 @@ endfunction
 function CreateAllItems takes nothing returns nothing
     local integer itemID
 
-    call BlzCreateItemWithSkin('bzbe', - 894.1, - 428.4, 'bzbe')
     call BlzCreateItemWithSkin('ckng', - 1036.5, - 142.7, 'ckng')
-    call BlzCreateItemWithSkin('fgsk', - 776.4, - 795.2, 'fgsk')
-    call BlzCreateItemWithSkin('kysn', - 792.4, - 198.7, 'kysn')
-    call BlzCreateItemWithSkin('sxpl', - 501.0, - 529.0, 'sxpl')
+    call BlzCreateItemWithSkin('gold', - 524.3, 161.6, 'gold')
+    call BlzCreateItemWithSkin('gold', - 374.6, 202.1, 'gold')
+    call BlzCreateItemWithSkin('gold', - 590.9, 220.1, 'gold')
+    call BlzCreateItemWithSkin('gold', - 528.0, 346.8, 'gold')
+    call BlzCreateItemWithSkin('gold', - 409.8, 65.7, 'gold')
+    call BlzCreateItemWithSkin('gold', - 453.9, 240.7, 'gold')
+    call BlzCreateItemWithSkin('gold', - 489.3, 116.9, 'gold')
+    call BlzCreateItemWithSkin('mnst', - 741.7, 44.1, 'mnst')
+    call BlzCreateItemWithSkin('mnst', - 765.4, - 14.8, 'mnst')
+    call BlzCreateItemWithSkin('mnst', - 617.2, 63.3, 'mnst')
+    call BlzCreateItemWithSkin('mnst', - 689.8, 63.3, 'mnst')
 endfunction
 
 //***************************************************************************
@@ -62,12 +69,7 @@ function CreateUnitsForPlayer0 takes nothing returns nothing
     local trigger t
     local real life
 
-    set u=BlzCreateUnitWithSkin(p, 'Hblm', - 126.6, 102.2, 228.600, 'Hblm')
     set u=BlzCreateUnitWithSkin(p, 'Hmkg', - 548.4, - 402.9, 293.245, 'Hmkg')
-    set u=BlzCreateUnitWithSkin(p, 'Hpal', - 289.4, - 350.3, 114.800, 'Hpal')
-    set u=BlzCreateUnitWithSkin(p, 'Hamg', - 627.0, - 190.0, 61.130, 'Hamg')
-    set u=BlzCreateUnitWithSkin(p, 'hgry', - 893.2, 306.2, 183.752, 'hgry')
-    set u=BlzCreateUnitWithSkin(p, 'hkni', - 692.7, 414.7, 311.549, 'hkni')
 endfunction
 
 //===========================================================================
@@ -132,6 +134,7 @@ function CreateUnitsForPlayer1 takes nothing returns nothing
     set u=BlzCreateUnitWithSkin(p, 'hpea', 1760.1, - 164.7, 193.058, 'hpea')
     set u=BlzCreateUnitWithSkin(p, 'hpea', 1771.6, 42.5, 13.525, 'hpea')
     set u=BlzCreateUnitWithSkin(p, 'hpea', 1944.5, 351.0, 133.444, 'hpea')
+    set u=BlzCreateUnitWithSkin(p, 'hpea', 1638.5, 419.1, 286.071, 'hpea')
 endfunction
 
 //===========================================================================
