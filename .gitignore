@@ -3,6 +3,5 @@ wurst.dependencies
 /.vscode
 
 # Other map files
-/*.w3x
 compiled-maps/*
 compiled.j.txt
