@@ -2,17 +2,54 @@ package PopUpTest
 
 import Assets
 import ClosureEvents
-import PopUp
+import PopUpFrame
+
+// Position of the initial pop up
+@configurable let BOTTOM_RIGHT_OFFSET_X = 0.93
+@configurable let BOTTOM_RIGHT_OFFSET_Y = 0.155
+// Position of the initial pop up
+@configurable let TOP_RIGHT_OFFSET_X = 0.93
+@configurable let TOP_RIGHT_OFFSET_Y = 0.6
+
+public function createPopUpBot(string iconLeft, string iconMiddle, string iconRight)
+    // Display frame to every player
+    for i = 0 to bj_MAX_PLAYERS - 1
+        if players[i].isIngame()
+            // Create new pop up and register it in a list
+            // New pop up will spawn behind the origin UI
+            // It will gradually move up to become visible
+            let initialPos = vec2(BOTTOM_RIGHT_OFFSET_X, BOTTOM_RIGHT_OFFSET_Y)
+            let offScreenPos = initialPos - vec2(0, 0.03)
+            new PopUpBottom(players[i], initialPos, offScreenPos, 10)
+                ..setIcons(iconLeft, iconMiddle, iconRight)
+                ..setScale(0.5)
+
+public function createPopUpTop(string iconLeft, string iconMiddle, string iconRight)
+    // Display frame to every player
+    for i = 0 to bj_MAX_PLAYERS - 1
+        if players[i].isIngame()
+            // Create new pop up and register it in a list
+            // New pop up will spawn behind the origin UI
+            // It will gradually move up to become visible
+            let initialPos = vec2(TOP_RIGHT_OFFSET_X, TOP_RIGHT_OFFSET_Y)
+            let offScreenPos = initialPos - vec2(0, 0.03)
+            new PopUpTop(players[i], initialPos, offScreenPos, 10)
+                ..setIcons(iconLeft, iconMiddle, iconRight)
+                ..setScale(0.5)
+
 
 init
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
         print("No native to get the unit icon.")
-        createPopUp(Icons.bTNHeroMountainKing, Icons.bTNAttack, Icons.bTNPeasant)
+        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNAttack, Icons.bTNPeasant)
 
     EventListener.add(EVENT_PLAYER_UNIT_PICKUP_ITEM) ->
         let itmIcon = EventData.getManipulatedItem().getIconPath()
-        createPopUp(Icons.bTNHeroMountainKing, Icons.bTNPickUpItem, itmIcon)
+        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNPickUpItem, itmIcon)
 
     EventListener.add(EVENT_PLAYER_UNIT_PAWN_ITEM) ->
         let itmIcon = EventData.getSoldItem().getIconPath()
-        createPopUp(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, itmIcon)
+        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, itmIcon)
+
+    EventListener.add(EVENT_PLAYER_ARROW_DOWN_UP) ->
+        createPopUpTop(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, Icons.bTNAcorn)
