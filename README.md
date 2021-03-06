@@ -9,3 +9,4 @@ Demo: https://github.com/Jaccouille/wurst-pop-up-ui/blob/main/wurst/PopUpTest.wu
 ![](https://thumbs.gfycat.com/BlissfulLoathsomeHarvestmen-size_restricted.gif)
 
 Still a bit clunky, haven't tested on multiplayer yet.
+Only tested on Patch 1.32.9
