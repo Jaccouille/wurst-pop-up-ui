@@ -8,16 +8,26 @@ import LinkedList
 @configurable let DEFAULT_POP_UP_ANIMATION_PERIOD = 0.03
 
 
-public abstract class PopUpFrame
-    // The pop up frames
+public class PopUpFrame
+    // The pop up frames list per player
     static let popUpPerPlayer = new HashMap<player, LinkedList<PopUpFrame>>
+
+    // The frame which is displayed, defined in the PopUp.fdf
     private framehandle popUpFrame = null
+
+    // Current position of the frame
     private var currentPos = vec2(0, 0)
+
+    // Initial position of the frame
     private var initialPos = vec2(0, 0)
+
+    // Player whom the frame is displayed
     private player _p
+
+    // Periodic movement callback
     CallbackCounted movementLoop
-    private var transitionSpeed = DEFAULT_TRANSITION_SPEED
-    private var animationPeriod = DEFAULT_POP_UP_ANIMATION_PERIOD
+
+    // Relative point used as reference to position the frame
     private framepointtype point = FRAMEPOINT_BOTTOMRIGHT
 
     static function initialize()
@@ -35,6 +45,10 @@ public abstract class PopUpFrame
     static function ofPlayer(player query) returns LinkedList<PopUpFrame>
         return popUpPerPlayer.get(query)
 
+    /**
+        If initialPos != currentPos, the frame will slide toward initialPos
+        upon creation
+    */
     construct(player _p, vec2 initialPos, vec2 currentPos, real lifetime)
         this._p = _p
         this.initialPos = initialPos
@@ -50,26 +64,27 @@ public abstract class PopUpFrame
             destroy this
 
     /**
-        Moves the frame to the new coordinates  during specified duration
-        Refresh the frame position every period
+        Moves the frame to the new coordinates over DEFAULT_TRANSITION_SPEED seconds
+        Refresh the frame position every DEFAULT_POP_UP_ANIMATION_PERIOD seconds
     **/
     private function slide(vec2 newPos)
-        let stepY = (newPos.y - currentPos.y) / (transitionSpeed / animationPeriod)
-        let stepX = (newPos.x - currentPos.x) / (transitionSpeed / animationPeriod)
-        movementLoop = doPeriodicallyTimed(animationPeriod, transitionSpeed) cb ->
+        let stepCount = (DEFAULT_TRANSITION_SPEED / DEFAULT_POP_UP_ANIMATION_PERIOD)
+        let stepY = (newPos.y - currentPos.y) / stepCount
+        let stepX = (newPos.x - currentPos.x) / stepCount
+        movementLoop = doPeriodicallyCounted(DEFAULT_POP_UP_ANIMATION_PERIOD, stepCount.toInt()) cb ->
             if movementLoop != cb or this == null
                 destroy cb
             this.setAbsPoint(currentPos + vec2(stepX, stepY))
 
-    protected function updateFramesPosition(vec2 factor)
+    function updateFramesPosition(vec2 direction)
         let popUpList = PopUpFrame.ofPlayer(this._p)
-        // Go over all the frames registered and move them up
+
+        // Go over all the registered frames and move them toward vec2 direction
         for popUp in popUpList
-            let offset = vec2(popUp.getFrameWidth(), popUp.getFrameHeight()) * factor
+            let offset = popUp.getFrameDimension() * direction
             let idx = popUpList.indexOf(popUp)
-            let newX = popUp.getInitialPos().x + idx * offset.x
-            let newY = popUp.getInitialPos().y + idx * offset.y
-            popUp.setCurrentPos(vec2(newX, newY), true)
+            let newPos = popUp.initialPos + offset.op_mult(idx.toReal())
+            popUp.setCurrentPos(newPos, true)
 
     function setIcons(string iconLeft, string iconMiddle, string iconRight)
         getFrame("IconLeft")
@@ -86,12 +101,6 @@ public abstract class PopUpFrame
     function setFramepointType(framepointtype point)
         this.point = point
 
-    function setInitialPos(vec2 pos)
-        this.initialPos = pos
-
-    function getInitialPos() returns vec2
-        return this.initialPos
-
     function setCurrentPos(vec2 pos, boolean slide)
         if slide
             this.slide(pos)
@@ -101,42 +110,19 @@ public abstract class PopUpFrame
     function getCurrentPos() returns vec2
         return this.currentPos
 
-    function setTransitionSpeed(real transitionSpeed)
-        this.transitionSpeed = transitionSpeed
-
-    function setAnimationPeriod(real period)
-        this.animationPeriod = period
-
     function setScale(real scale)
         this.popUpFrame.setScale(scale)
 
-    function getFrameHeight() returns real
-        return this.popUpFrame.getHeight()
-
-    function getFrameWidth() returns real
-        return this.popUpFrame.getWidth()
+    function getFrameDimension() returns vec2
+        return vec2(this.popUpFrame.getWidth(), this.popUpFrame.getHeight())
 
     ondestroy
         popUpPerPlayer.get(_p).remove(this)
         popUpFrame.remove()
 
 
-public class PopUpTop extends PopUpFrame
-    construct(player _p,  vec2 initialPos, vec2 currentPos, real lifetime)
-        super(_p, initialPos, currentPos, lifetime)
-        let slideOffset = vec2(0, -1)
-        this.updateFramesPosition(slideOffset)
-
-public class PopUpBottom extends PopUpFrame
-    construct(player _p,  vec2 initialPos, vec2 currentPos, real lifetime)
-        super(_p, initialPos, currentPos, lifetime)
-        let slideOffset = vec2(0, 1)
-        this.updateFramesPosition(slideOffset)
-
-
 init
     if loadTOCFile("PopUp.toc") == false
         print("toc file loading failure")
     else
-        PopUpTop.initialize()
-        PopUpBottom.initialize()
+        PopUpFrame.initialize()

@@ -15,27 +15,12 @@ public function createPopUpBot(string iconLeft, string iconMiddle, string iconRi
     // Display frame to every player
     for i = 0 to bj_MAX_PLAYERS - 1
         if players[i].isIngame()
-            // Create new pop up and register it in a list
-            // New pop up will spawn behind the origin UI
-            // It will gradually move up to become visible
             let initialPos = vec2(BOTTOM_RIGHT_OFFSET_X, BOTTOM_RIGHT_OFFSET_Y)
             let offScreenPos = initialPos - vec2(0, 0.03)
-            new PopUpBottom(players[i], initialPos, offScreenPos, 10)
+            new PopUpFrame(players[i], initialPos, offScreenPos, 10)
                 ..setIcons(iconLeft, iconMiddle, iconRight)
                 ..setScale(0.5)
-
-public function createPopUpTop(string iconLeft, string iconMiddle, string iconRight)
-    // Display frame to every player
-    for i = 0 to bj_MAX_PLAYERS - 1
-        if players[i].isIngame()
-            // Create new pop up and register it in a list
-            // New pop up will spawn behind the origin UI
-            // It will gradually move up to become visible
-            let initialPos = vec2(TOP_RIGHT_OFFSET_X, TOP_RIGHT_OFFSET_Y)
-            let offScreenPos = initialPos - vec2(0, 0.03)
-            new PopUpTop(players[i], initialPos, offScreenPos, 10)
-                ..setIcons(iconLeft, iconMiddle, iconRight)
-                ..setScale(0.5)
+                ..updateFramesPosition(vec2(0, 1))
 
 
 init
@@ -52,4 +37,4 @@ init
         createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, itmIcon)
 
     EventListener.add(EVENT_PLAYER_ARROW_DOWN_UP) ->
-        createPopUpTop(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, Icons.bTNAcorn)
+        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, Icons.bTNAcorn)
