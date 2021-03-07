@@ -5,11 +5,8 @@ import ClosureEvents
 import PopUpFrame
 
 // Position of the initial pop up
-@configurable let BOTTOM_RIGHT_OFFSET_X = 0.93
+@configurable let BOTTOM_RIGHT_OFFSET_X = 0.8
 @configurable let BOTTOM_RIGHT_OFFSET_Y = 0.155
-// Position of the initial pop up
-@configurable let TOP_RIGHT_OFFSET_X = 0.93
-@configurable let TOP_RIGHT_OFFSET_Y = 0.6
 
 public function createPopUpBot(string iconLeft, string iconMiddle, string iconRight)
     // Display frame to every player
