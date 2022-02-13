@@ -22,16 +22,20 @@ public function createPopUpBot(string iconLeft, string iconMiddle, string iconRi
 
 init
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
-        print("No native to get the unit icon.")
-        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNAttack, Icons.bTNPeasant)
+        let killerIcon = getAbilityIcon(EventData.getKillingUnit().getTypeId())
+        let dyingIcon = getAbilityIcon(EventData.getDyingUnit().getTypeId())
+        createPopUpBot(killerIcon, Icons.bTNAttack, dyingIcon)
 
     EventListener.add(EVENT_PLAYER_UNIT_PICKUP_ITEM) ->
         let itmIcon = EventData.getManipulatedItem().getIconPath()
-        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNPickUpItem, itmIcon)
+        let unitIcon = getAbilityIcon(EventData.getManipulatingUnit().getTypeId())
+        createPopUpBot(unitIcon, Icons.bTNPickUpItem, itmIcon)
 
     EventListener.add(EVENT_PLAYER_UNIT_PAWN_ITEM) ->
         let itmIcon = EventData.getSoldItem().getIconPath()
-        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, itmIcon)
+        let unitIcon = getAbilityIcon(EventData.getManipulatingUnit().getTypeId())
+        createPopUpBot(unitIcon, Icons.bTNMGExchange, itmIcon)
 
     EventListener.add(EVENT_PLAYER_ARROW_DOWN_UP) ->
-        createPopUpBot(Icons.bTNHeroMountainKing, Icons.bTNMGExchange, Icons.bTNAcorn)
+        let unitIcon = getAbilityIcon(EventData.getManipulatingUnit().getTypeId())
+        createPopUpBot(unitIcon, Icons.bTNMGExchange, Icons.bTNAcorn)
