@@ -123,6 +123,6 @@ public class PopUpFrame
 
 init
     if loadTOCFile("PopUp.toc") == false
-        print("toc file loading failure")
+        print("Failed to load PopUp.toc file")
     else
         PopUpFrame.initialize()
