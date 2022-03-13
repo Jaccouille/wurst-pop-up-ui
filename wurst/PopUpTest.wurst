@@ -21,6 +21,13 @@ public function createPopUpBot(string iconLeft, string iconMiddle, string iconRi
 
 
 init
+
+    createUnit(players[0], 'ngme', vec2(-400, 0), 270..asAngleDegrees())
+    for i = 0 to 10
+        createItem('gold', vec2(0,0))
+        createItem('mnst', vec2(0,0))
+        createUnit(players[1], 'hpea', vec2(750, 0), 270..asAngleDegrees()).setMaxHP(1)
+
     EventListener.add(EVENT_PLAYER_UNIT_DEATH) ->
         let killerIcon = getAbilityIcon(EventData.getKillingUnit().getTypeId())
         let dyingIcon = getAbilityIcon(EventData.getDyingUnit().getTypeId())
@@ -31,9 +38,10 @@ init
         let unitIcon = getAbilityIcon(EventData.getManipulatingUnit().getTypeId())
         createPopUpBot(unitIcon, Icons.bTNPickUpItem, itmIcon)
 
+    // Unit selling the item
     EventListener.add(EVENT_PLAYER_UNIT_PAWN_ITEM) ->
         let itmIcon = EventData.getSoldItem().getIconPath()
-        let unitIcon = getAbilityIcon(EventData.getManipulatingUnit().getTypeId())
+        let unitIcon = getAbilityIcon(EventData.getTriggerUnit().getTypeId())
         createPopUpBot(unitIcon, Icons.bTNMGExchange, itmIcon)
 
     EventListener.add(EVENT_PLAYER_ARROW_DOWN_UP) ->
